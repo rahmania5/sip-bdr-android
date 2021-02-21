@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.rahmania.sip_bdr.activity.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.rahmania.sip_bdr.fragment.ClassroomFragment"
+        android:label="@string/menu_1"
+        tools:layout="@layout/fragment_classroom" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.rahmania.sip_bdr.activity.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.rahmania.sip_bdr.fragment.LocationSubmissionFragment"
+        android:label="@string/menu_2"
+        tools:layout="@layout/fragment_location_submission" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.rahmania.sip_bdr.activity.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.rahmania.sip_bdr.fragment.AccountFragment"
+        android:label="@string/menu_3"
+        tools:layout="@layout/fragment_account" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.activity
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -12,9 +12,11 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.api.ApiClient
 import com.rahmania.sip_bdr.api.ApiInterface
-import com.rahmania.sip_bdr.api.SessionManager
+import com.rahmania.sip_bdr.helper.CustomProgressDialog
+import com.rahmania.sip_bdr.helper.SharedPreferences
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,7 +33,7 @@ class EditMeetingActivity : AppCompatActivity() {
     private var startTime: String? = null
     private var finishTime: String? = null
     private lateinit var apiInterface: ApiInterface
-    private var sessionManager: SessionManager? = null
+    private var sessionManager: SharedPreferences? = null
     lateinit var progressDialog: CustomProgressDialog
 
     var id: Int? = null
@@ -55,7 +57,7 @@ class EditMeetingActivity : AppCompatActivity() {
 
         btnEditMeeting = findViewById(R.id.btn_edit_meeting)
 
-        sessionManager = SessionManager.SessionManager(this)
+        sessionManager = SharedPreferences.SessionManager(this)
         sessionManager!!.isLogin()
 
         setUpContent()

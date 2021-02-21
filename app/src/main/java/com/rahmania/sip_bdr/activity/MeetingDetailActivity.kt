@@ -1,10 +1,12 @@
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.activity
 
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,10 +16,12 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.adapter.StudentAdapter
 import com.rahmania.sip_bdr.api.ApiClient
 import com.rahmania.sip_bdr.api.ApiInterface
-import com.rahmania.sip_bdr.api.SessionManager
+import com.rahmania.sip_bdr.helper.CustomProgressDialog
+import com.rahmania.sip_bdr.helper.SharedPreferences
 import com.rahmania.sip_bdr.viewModel.MeetingDetailViewModel
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -35,7 +39,7 @@ class MeetingDetailActivity : AppCompatActivity() {
     private var rv: RecyclerView? = null
     private var studentVM: MeetingDetailViewModel? = null
     private lateinit var apiInterface: ApiInterface
-    private var sessionManager: SessionManager? = null
+    private var sessionManager: SharedPreferences? = null
     lateinit var progressDialog: CustomProgressDialog
 
     var id: Int? = null
@@ -50,7 +54,15 @@ class MeetingDetailActivity : AppCompatActivity() {
     private var tvNumber:TextView? = null
     private var tvDate:TextView? = null
     private var tvTime:TextView? = null
+    private var fabMain: FloatingActionButton? = null
     private var fabEditMeeting: FloatingActionButton? = null
+    private var fabDeleteMeeting: FloatingActionButton? = null
+    private lateinit var fabOpen: Animation
+    private lateinit var fabClose: Animation
+    private lateinit var fabClock: Animation
+    private lateinit var fabAntiClock: Animation
+
+    private var isOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,9 +78,16 @@ class MeetingDetailActivity : AppCompatActivity() {
         tvDate = findViewById(R.id.tv_date)
         tvTime = findViewById(R.id.tv_time)
 
+        fabMain = findViewById(R.id.fab)
         fabEditMeeting = findViewById(R.id.fab_editMeeting)
+        fabDeleteMeeting = findViewById(R.id.fab_deleteMeeting)
 
-        sessionManager = SessionManager.SessionManager(this)
+        fabOpen = AnimationUtils.loadAnimation(applicationContext, R.anim.fab_open)
+        fabClose = AnimationUtils.loadAnimation(applicationContext, R.anim.fab_close)
+        fabClock = AnimationUtils.loadAnimation(applicationContext, R.anim.fab_rotate_clock)
+        fabAntiClock = AnimationUtils.loadAnimation(applicationContext, R.anim.fab_rotate_anticlock)
+
+        sessionManager = SharedPreferences.SessionManager(this)
         sessionManager!!.isLogin()
 
         setUpContent()
@@ -136,6 +155,24 @@ class MeetingDetailActivity : AppCompatActivity() {
         studentAdapter.notifyDataSetChanged()
         rv!!.adapter = studentAdapter
 
+        fabMain?.setOnClickListener {
+            isOpen = if (isOpen) {
+                fabEditMeeting?.startAnimation(fabClose)
+                fabDeleteMeeting?.startAnimation(fabClose)
+                fabMain!!.startAnimation(fabAntiClock)
+                fabEditMeeting?.isClickable = false
+                fabDeleteMeeting?.isClickable = false
+                false
+            } else {
+                fabEditMeeting?.startAnimation(fabOpen)
+                fabDeleteMeeting?.startAnimation(fabOpen)
+                fabMain!!.startAnimation(fabClock)
+                fabEditMeeting?.isClickable = true
+                fabDeleteMeeting?.isClickable = true
+                true
+            }
+        }
+
         try {
             id = intent.extras?.getInt("id")
             meetingNumber = intent.extras?.getString("meetingNumber")
@@ -182,6 +219,28 @@ class MeetingDetailActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            fabDeleteMeeting?.setOnClickListener { v ->
+                when (v.id) {
+                    R.id.fab_deleteMeeting -> {
+                        val builder: AlertDialog.Builder =
+                            AlertDialog.Builder(this@MeetingDetailActivity)
+                        builder.setTitle("Hapus Pertemuan")
+                        builder.setIcon(R.drawable.ic_delete)
+                        builder.setMessage("Anda yakin ingin menghapus pertemuan ini?")
+
+                        builder.setPositiveButton("Ya"
+                        ) { dialog, _ ->
+                            deleteMeeting(token!!, id!!)
+                        }
+
+                        builder.setNegativeButton("Cancel", null)
+                        val dialog: AlertDialog? = builder.create()
+                        dialog?.setCanceledOnTouchOutside(false)
+                        dialog?.show()
+                    }
+                }
+            }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -203,6 +262,40 @@ class MeetingDetailActivity : AppCompatActivity() {
                 Log.e("error data", t.message.toString())
                 Toast.makeText(this@MeetingDetailActivity,
                     "Gagal memperbarui status kehadiran",
+                    Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun deleteMeeting(token: String, meetingId: Int) {
+        progressDialog.showLoading()
+        apiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val deleteCall: Call<ResponseBody?>? =
+            apiInterface.deleteMeeting(token, meetingId)
+        deleteCall?.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+                if (response.code() == 200) {
+                    Toast.makeText(
+                        this@MeetingDetailActivity,
+                        "Berhasil menghapus pertemuan!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                    progressDialog.hideLoading()
+                } else {
+                    Toast.makeText(
+                        this@MeetingDetailActivity,
+                        "Pertemuan sudah terbentuk. Gagal menghapus pertemuan",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    progressDialog.hideLoading()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Log.e("error data", t.message.toString())
+                Toast.makeText(this@MeetingDetailActivity,
+                    "Gagal menghapus pertemuuan",
                     Toast.LENGTH_SHORT).show()
             }
         })

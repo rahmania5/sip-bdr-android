@@ -1,4 +1,4 @@
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,10 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.adapter.MeetingAdapter
-import com.rahmania.sip_bdr.api.SessionManager
+import com.rahmania.sip_bdr.helper.CustomProgressDialog
+import com.rahmania.sip_bdr.helper.SharedPreferences
 import com.rahmania.sip_bdr.viewModel.ClassroomDetailViewModel
 import org.json.JSONArray
 import org.json.JSONException
@@ -25,12 +27,11 @@ import java.util.*
 class ClassroomDetailActivity : AppCompatActivity() {
     private var rv: RecyclerView? = null
     private var meetingVM: ClassroomDetailViewModel? = null
-    private var sessionManager: SessionManager? = null
-    lateinit var progressDialog: CustomProgressDialog
+    private var sessionManager: SharedPreferences? = null
+    private lateinit var progressDialog: CustomProgressDialog
 
     var id: Int? = null
     private var tvClassName: TextView? = null
-    private var tvCourseCode:TextView? = null
     private var tvSks:TextView? = null
     private var tvDay:TextView? = null
     private var tvTime:TextView? = null
@@ -45,7 +46,6 @@ class ClassroomDetailActivity : AppCompatActivity() {
         rv = findViewById<View>(R.id.rv_meetings) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(this)
         tvClassName = findViewById(R.id.tv_classroomName)
-        tvCourseCode = findViewById(R.id.tv_courseCode)
         tvSks = findViewById(R.id.tv_sks)
         tvDay = findViewById(R.id.tv_day)
         tvTime = findViewById(R.id.tv_time)
@@ -53,7 +53,7 @@ class ClassroomDetailActivity : AppCompatActivity() {
 
         fabCreateMeeting = findViewById(R.id.fab_createMeeting)
 
-        sessionManager = SessionManager.SessionManager(this)
+        sessionManager = SharedPreferences.SessionManager(this)
         sessionManager!!.isLogin()
 
         setUpContent()
@@ -93,7 +93,6 @@ class ClassroomDetailActivity : AppCompatActivity() {
 
             tvClassName!!.text = (classroomDetail.getString("course_name").capitalizeFirstLetter() + " "
                     + classroomDetail.getString("classroom_code"))
-            tvCourseCode!!.text = classroomDetail.getString("course_code").toUpperCase(Locale.ROOT)
 
 //            var lecturerName = ""
 //            for (i in 0 until classroomDetail.getJSONArray("lecturers").length()) {

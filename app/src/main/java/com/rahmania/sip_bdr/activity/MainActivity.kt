@@ -1,4 +1,4 @@
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.api.ApiClient.getClient
 import com.rahmania.sip_bdr.api.ApiInterface
-import com.rahmania.sip_bdr.api.SessionManager.SessionManager
+import com.rahmania.sip_bdr.helper.SharedPreferences.SessionManager
 import com.rahmania.sip_bdr.fragment.AccountFragment
 import com.rahmania.sip_bdr.fragment.ClassroomFragment
 import com.rahmania.sip_bdr.fragment.LocationSubmissionFragment
@@ -22,7 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import com.rahmania.sip_bdr.api.SessionManager as ApiSessionManager
+import com.rahmania.sip_bdr.helper.SharedPreferences as ApiSessionManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_classroom -> {
                     callFragment(0, fragmentClassroom)
                 }
-                R.id.navigation_location_submission-> {
+                R.id.navigation_location_submission -> {
                     callFragment(1, fragmentLocationSubmission)
                 }
                 R.id.navigation_account -> {
@@ -99,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                     val intent =
                         Intent(this@MainActivity, LoginActivity::class.java)
                     startActivity(intent)
+                    finish()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 } catch (e: IOException) {

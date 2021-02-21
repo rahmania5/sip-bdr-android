@@ -1,10 +1,11 @@
 @file:Suppress("DEPRECATION")
 
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.helper
 
 import android.app.Activity
 import android.app.AlertDialog
 import android.view.LayoutInflater
+import com.rahmania.sip_bdr.R
 
 class CustomProgressDialog(activity: Activity) {
     private val dialog: AlertDialog

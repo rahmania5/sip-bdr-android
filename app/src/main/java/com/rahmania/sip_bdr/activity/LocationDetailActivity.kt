@@ -1,4 +1,4 @@
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.api.ApiClient
 import com.rahmania.sip_bdr.api.ApiInterface
-import com.rahmania.sip_bdr.api.SessionManager
+import com.rahmania.sip_bdr.helper.CustomProgressDialog
+import com.rahmania.sip_bdr.helper.SharedPreferences
 import okhttp3.ResponseBody
 import org.json.JSONException
 import org.json.JSONObject
@@ -22,7 +24,7 @@ import java.io.IOException
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class LocationDetailActivity : AppCompatActivity() {
     private lateinit var apiInterface: ApiInterface
-    private var sessionManager: SessionManager? = null
+    private var sessionManager: SharedPreferences? = null
     lateinit var progressDialog: CustomProgressDialog
 
     var id: Int? = null
@@ -48,7 +50,7 @@ class LocationDetailActivity : AppCompatActivity() {
 
         btnAccept = findViewById(R.id.btn_accept)
 
-        sessionManager = SessionManager.SessionManager(this)
+        sessionManager = SharedPreferences.SessionManager(this)
         sessionManager!!.isLogin()
 
         setUpContent()

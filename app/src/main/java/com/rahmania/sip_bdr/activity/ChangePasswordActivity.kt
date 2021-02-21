@@ -1,4 +1,4 @@
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.api.ApiClient
 import com.rahmania.sip_bdr.api.ApiInterface
-import com.rahmania.sip_bdr.api.SessionManager
+import com.rahmania.sip_bdr.helper.CustomProgressDialog
+import com.rahmania.sip_bdr.helper.SharedPreferences
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -23,7 +25,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     private var newPassword: String? = null
     private var passwordConfirmation: String? = null
     private lateinit var apiInterface: ApiInterface
-    private var sessionManager: SessionManager? = null
+    private var sessionManager: SharedPreferences? = null
     lateinit var progressDialog: CustomProgressDialog
 
     private var etOldPassword: EditText? = null
@@ -43,7 +45,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         btnChangePassword = findViewById(R.id.btn_change_pass)
 
-        sessionManager = SessionManager.SessionManager(this)
+        sessionManager = SharedPreferences.SessionManager(this)
         sessionManager!!.isLogin()
 
         val user = sessionManager!!.getUserDetail()

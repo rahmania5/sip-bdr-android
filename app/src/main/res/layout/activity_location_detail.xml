@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".activity.LocationDetailActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/TextAbout.Black"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="26sp"
+        tools:text="Nama Mahasiswa" />
+
+    <TextView
+        android:id="@+id/tv_nim"
+        style="@style/TextAbout.Black"
+        android:layout_marginBottom="8dp"
+        android:textSize="22sp"
+        tools:text="NIM" />
+
+    <TextView
+        style="@style/TextAbout.Subtitle"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/loc_description" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                style="@style/TextSpec.Field"
+                android:text="@string/alamat" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                style="@style/TextSpec.Value"
+                tools:text="Alamat" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                style="@style/TextSpec.Field"
+                android:text="@string/longitude" />
+
+            <TextView
+                android:id="@+id/tv_longitude"
+                style="@style/TextSpec.Value"
+                tools:text="Longitude" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                style="@style/TextSpec.Field"
+                android:text="@string/latitude" />
+
+            <TextView
+                android:id="@+id/tv_latitude"
+                style="@style/TextSpec.Value"
+                tools:text="Latitude" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp">
+
+            <TextView
+                style="@style/TextSpec.Field"
+                android:text="@string/submission_status" />
+
+            <TextView
+                android:id="@+id/tv_submission_status"
+                style="@style/TextSpec.Value"
+                tools:text="Submission Status" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_accept"
+        style="@style/Button"
+        android:layout_marginBottom="8dp"
+        android:text="@string/btn_accept" />
+
+</LinearLayout>

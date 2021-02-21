@@ -1,4 +1,4 @@
-package com.rahmania.sip_bdr
+package com.rahmania.sip_bdr.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +8,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.api.ApiClient
 import com.rahmania.sip_bdr.api.ApiInterface
-import com.rahmania.sip_bdr.api.SessionManager
-import com.rahmania.sip_bdr.api.SessionManager.SessionManager
+import com.rahmania.sip_bdr.helper.CustomProgressDialog
+import com.rahmania.sip_bdr.helper.SharedPreferences
+import com.rahmania.sip_bdr.helper.SharedPreferences.SessionManager
 import okhttp3.ResponseBody
 import org.json.JSONException
 import org.json.JSONObject
@@ -29,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private var etPassword: EditText? = null
     private var btnLogin: Button? = null
     private lateinit var apiInterface: ApiInterface
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager: SharedPreferences
     lateinit var progressDialog: CustomProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
