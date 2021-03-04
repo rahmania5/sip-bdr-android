@@ -19,7 +19,7 @@
     <string name="content_desc_2">Profile pic</string>
     <string name="change_pass">Ganti Password</string>
     <string name="loc_description">Detail Pengajuan Lokasi</string>
-    <string name="alamat">Alamat</string>
+    <string name="address">Alamat</string>
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
     <string name="submission_status">Status</string>
@@ -43,9 +43,9 @@
     <string name="password_confirmation">Konfirmasi Password Baru</string>
     <string name="no_location_submission">Tidak ada pengajuan lokasi mahasiswa</string>
     <string name="no_classroom">Tidak ada kelas yang diampu</string>
-    <string name="loading">Loading...</string>
-    <string name="fab_label1">Edit Pertemuan</string>
-    <string name="fab_label2">Hapus Pertemuan</string>
+    <string name="loading">Loading…</string>
+    <string name="btn_decline">Tolak Pengajuan</string>
+    <string name="google_maps_key">AIzaSyCtigRen8h--o1nQV9HijxeJPCKhZoKQjo</string>
     <string-array name="meeting_number">
         <item>1</item> <item>2</item> <item>3</item>
         <item>4</item> <item>5</item> <item>6</item>

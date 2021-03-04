@@ -13,7 +13,7 @@ import org.json.JSONObject
 
 class StudentAdapter : RecyclerView.Adapter<StudentAdapter.ListViewHolder>() {
     private var studentData = JSONArray()
-    var listener: OnItemClickListener? = null
+    private var listener: OnItemClickListener? = null
 
     fun StudentAdapter(listener: OnItemClickListener?) {
         this.listener = listener

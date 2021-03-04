@@ -15,7 +15,7 @@ import java.util.*
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MeetingAdapter : RecyclerView.Adapter<MeetingAdapter.ListViewHolder>() {
     private var meetingData = JSONArray()
-    var listener: OnItemClickListener? = null
+    private var listener: OnItemClickListener? = null
 
     fun MeetingAdapter(listener: OnItemClickListener?) {
         this.listener = listener

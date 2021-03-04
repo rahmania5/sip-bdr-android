@@ -12,7 +12,7 @@ import org.json.JSONObject
 
 class LocationSubmissionAdapter : RecyclerView.Adapter<LocationSubmissionAdapter.ListViewHolder>() {
     private var locationData = JSONArray()
-    var listener: OnItemClickListener? = null
+    private var listener: OnItemClickListener? = null
 
     fun LocationSubmissionAdapter(listener: OnItemClickListener?) {
         this.listener = listener

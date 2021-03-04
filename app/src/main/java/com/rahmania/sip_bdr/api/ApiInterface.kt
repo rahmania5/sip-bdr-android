@@ -75,7 +75,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("studentlocation/{id}")
-    fun acceptSubmission(
+    fun followUpSubmission(
         @Header("Authorization") authToken: String?,
         @Path("id") id: Int?,
         @Field("submission_status") submissionStatus: String?

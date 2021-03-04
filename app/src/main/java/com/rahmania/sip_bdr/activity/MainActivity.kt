@@ -23,7 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import com.rahmania.sip_bdr.helper.SharedPreferences as ApiSessionManager
+import com.rahmania.sip_bdr.helper.SharedPreferences
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private lateinit var apiInterface: ApiInterface
-    private lateinit var sessionManager: ApiSessionManager
+    private lateinit var sessionManager: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

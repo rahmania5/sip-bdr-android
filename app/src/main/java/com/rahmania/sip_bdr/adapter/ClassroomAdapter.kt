@@ -15,7 +15,7 @@ import java.util.*
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ClassroomAdapter : RecyclerView.Adapter<ClassroomAdapter.ListViewHolder>() {
     private var classroomData = JSONArray()
-    var listener: OnItemClickListener? = null
+    private var listener: OnItemClickListener? = null
 
     fun ClassroomAdapter(listener: OnItemClickListener?) {
         this.listener = listener

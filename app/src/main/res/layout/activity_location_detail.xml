@@ -6,6 +6,13 @@
     android:orientation="vertical"
     tools:context=".activity.LocationDetailActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2" />
+
     <TextView
         android:id="@+id/tv_name"
         style="@style/TextAbout.Black"
@@ -41,7 +48,7 @@
 
             <TextView
                 style="@style/TextSpec.Field"
-                android:text="@string/alamat" />
+                android:text="@string/address" />
 
             <TextView
                 android:id="@+id/tv_address"
@@ -101,4 +108,10 @@
         android:layout_marginBottom="8dp"
         android:text="@string/btn_accept" />
 
+    <Button
+        android:id="@+id/btn_decline"
+        style="@style/Button"
+        android:backgroundTint="@color/red"
+        android:layout_marginBottom="8dp"
+        android:text="@string/btn_decline" />
 </LinearLayout>
