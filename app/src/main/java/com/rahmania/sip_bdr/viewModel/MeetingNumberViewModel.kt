@@ -16,13 +16,13 @@ import retrofit2.Response
 import java.io.IOException
 
 
-class ClassroomViewModel : ViewModel() {
+class MeetingNumberViewModel : ViewModel() {
     private lateinit var apiInterface: ApiInterface
-    private val classroomList = MutableLiveData<JSONArray>()
+    private val meetingNumber = MutableLiveData<JSONArray>()
 
-    fun setClassrooms(token: String?) {
+    fun setMeetingNumber(token: String?, lecturerClassroomId: Int?) {
         this.apiInterface = getClient()!!.create(ApiInterface::class.java)
-        apiInterface.getClassroomList(token)?.enqueue(object : Callback<ResponseBody?> {
+        apiInterface.getMeetingNumbers(token, lecturerClassroomId)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(
                 call: Call<ResponseBody?>?,
                 response: Response<ResponseBody?>
@@ -31,8 +31,8 @@ class ClassroomViewModel : ViewModel() {
                     val jsonRESULTS: JSONObject?
                     try {
                         jsonRESULTS = JSONObject(response.body()!!.string())
-                        val classes = jsonRESULTS.getJSONArray("lecturerclassrooms")
-                        classroomList.postValue(classes)
+                        val meetingNo = jsonRESULTS.getJSONArray("meeting_numbers")
+                        meetingNumber.postValue(meetingNo)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     } catch (e: IOException) {
@@ -47,7 +47,7 @@ class ClassroomViewModel : ViewModel() {
         })
     }
 
-    fun getClassrooms(): LiveData<JSONArray> {
-        return classroomList
+    fun getMeetingNumber(): LiveData<JSONArray>? {
+        return meetingNumber
     }
 }

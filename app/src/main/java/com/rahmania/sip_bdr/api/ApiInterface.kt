@@ -32,7 +32,19 @@ interface ApiInterface {
     ): Call<ResponseBody?>?
 
     @GET("lecturerclassroom")
-    fun getClassroomSchedule(@Header("Authorization") authToken: String?): Call<ResponseBody?>?
+    fun getClassroomList(@Header("Authorization") authToken: String?): Call<ResponseBody?>?
+
+    @GET("schedules/{classroom_id}")
+    fun getClassroomSchedule(
+        @Header("Authorization") authToken: String?,
+        @Path("classroom_id") classroomId: Int?
+    ): Call<ResponseBody?>?
+
+    @GET("meetingnumber/{lecturer_classroom_id}")
+    fun getMeetingNumbers(
+        @Header("Authorization") authToken: String?,
+        @Path("lecturer_classroom_id") lecturerClassroomId: Int?
+    ): Call<ResponseBody?>?
 
     @FormUrlEncoded
     @POST("meeting/{id}")
@@ -43,7 +55,8 @@ interface ApiInterface {
         @Field("date") date: String?,
         @Field("start_time") startTime: String?,
         @Field("finish_time") finishTime: String?,
-        @Field("lecturer_classroom_id") lecturerClassroomId: Int?
+        @Field("lecturer_classroom_id") lecturerClassroomId: Int?,
+        @Field("topic") topic: String?
     ): Call<ResponseBody?>?
 
     @FormUrlEncoded
@@ -55,7 +68,8 @@ interface ApiInterface {
         @Field("number_of_meeting") numberOfMeeting: String,
         @Field("date") date: String?,
         @Field("start_time") startTime: String?,
-        @Field("finish_time") finishTime: String?
+        @Field("finish_time") finishTime: String?,
+        @Field("topic") topic: String?
     ): Call<ResponseBody?>?
 
     @DELETE("meeting/{id}")

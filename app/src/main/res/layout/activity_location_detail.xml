@@ -18,19 +18,19 @@
         style="@style/TextAbout.Black"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:textSize="26sp"
+        android:textSize="22sp"
         tools:text="Nama Mahasiswa" />
 
     <TextView
         android:id="@+id/tv_nim"
         style="@style/TextAbout.Black"
         android:layout_marginBottom="8dp"
-        android:textSize="22sp"
+        android:textSize="20sp"
         tools:text="NIM" />
 
     <TextView
         style="@style/TextAbout.Subtitle"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/loc_description" />
 

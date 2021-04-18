@@ -1,5 +1,6 @@
 package com.rahmania.sip_bdr.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,6 @@ import com.rahmania.sip_bdr.R
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ClassroomAdapter : RecyclerView.Adapter<ClassroomAdapter.ListViewHolder>() {
@@ -29,8 +28,9 @@ class ClassroomAdapter : RecyclerView.Adapter<ClassroomAdapter.ListViewHolder>()
     inner class ListViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val tvClassroom: TextView = itemView.findViewById<View>(R.id.tv_item_classroom) as TextView
-        val tvDay: TextView = itemView.findViewById<View>(R.id.tv_item_day) as TextView
-        val tvTime: TextView = itemView.findViewById<View>(R.id.tv_item_time) as TextView
+        val tvCourseCode: TextView = itemView.findViewById<View>(R.id.tv_item_code) as TextView
+//        val tvDay: TextView = itemView.findViewById<View>(R.id.tv_item_day) as TextView
+//        val tvTime: TextView = itemView.findViewById<View>(R.id.tv_item_time) as TextView
         fun bind(item: JSONObject, listener: OnItemClickListener?) {
             itemView.setOnClickListener {
                 try {
@@ -54,21 +54,26 @@ class ClassroomAdapter : RecyclerView.Adapter<ClassroomAdapter.ListViewHolder>()
         return classroomData.length()
     }
 
+    @SuppressLint("DefaultLocale")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         try {
-            val startTime = classroomData.getJSONObject(position).getString("start_time")
-            val finishTime = classroomData.getJSONObject(position).getString("finish_time")
+//            val startTime = classroomData.getJSONObject(position).getString("start_time")
+//            val finishTime = classroomData.getJSONObject(position).getString("finish_time")
 
-            val outputTime = SimpleDateFormat("HH:mm", Locale.US)
-            val inputTime = SimpleDateFormat("HH:mm:ss", Locale.US)
-            val startTimeFormat = inputTime.parse(startTime)
-            val finishTimeFormat = inputTime.parse(finishTime)
+//            val outputTime = SimpleDateFormat("HH:mm", Locale.US)
+//            val inputTime = SimpleDateFormat("HH:mm:ss", Locale.US)
+//            val startTimeFormat = inputTime.parse(startTime)
+//            val finishTimeFormat = inputTime.parse(finishTime)
+//            val startTimeFormat2 = inputTime.parse(startTime2)
+//            val finishTimeFormat2 = inputTime.parse(finishTime2)
 
             holder.tvClassroom.text = (classroomData.getJSONObject(position).getString("course_name").capitalizeFirstLetter() + " "
                     + classroomData.getJSONObject(position).getString("classroom_code"))
-            holder.tvDay.text = classroomData.getJSONObject(position).getString("scheduled_day")
-            holder.tvTime.text = (outputTime.format(startTimeFormat) + " - "
-                    + outputTime.format(finishTimeFormat))
+            holder.tvCourseCode.text = classroomData.getJSONObject(position).getString("course_code").toUpperCase()
+//            holder.tvTime.text = (outputTime.format(startTimeFormat) + " - "
+//                    + outputTime.format(finishTimeFormat))
+//            holder.tvDay.text = (classroomData.getJSONObject(position).getString("scheduled_day") +
+//                    " | " + outputTime.format(startTimeFormat) + " - " + outputTime.format(finishTimeFormat))
             holder.bind(classroomData.getJSONObject(position), listener)
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -80,6 +85,7 @@ class ClassroomAdapter : RecyclerView.Adapter<ClassroomAdapter.ListViewHolder>()
         fun onItemClick(item: JSONObject)
     }
 
+    @SuppressLint("DefaultLocale")
     private fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize() }.trimEnd()
 
 }

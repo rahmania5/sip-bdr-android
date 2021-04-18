@@ -5,13 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.rahmania.sip_bdr.R
 import com.rahmania.sip_bdr.api.ApiClient
 import com.rahmania.sip_bdr.api.ApiInterface
 import com.rahmania.sip_bdr.helper.CustomProgressDialog
 import com.rahmania.sip_bdr.helper.SharedPreferences
+import com.rahmania.sip_bdr.viewModel.AccountViewModel
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -27,7 +31,10 @@ class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var apiInterface: ApiInterface
     private var sessionManager: SharedPreferences? = null
     lateinit var progressDialog: CustomProgressDialog
+    private var accountVM: AccountViewModel? = null
 
+    private var tvName: TextView? = null
+    private var tvNip: TextView? = null
     private var etOldPassword: EditText? = null
     private var etNewPassword: EditText? = null
     private var etPasswordConfirmation: EditText? = null
@@ -39,6 +46,8 @@ class ChangePasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_change_password)
         progressDialog = CustomProgressDialog(this)
 
+        tvName = findViewById(R.id.tv_name)
+        tvNip = findViewById(R.id.tv_nip)
         etOldPassword = findViewById(R.id.et_old_password)
         etNewPassword = findViewById(R.id.et_new_password)
         etPasswordConfirmation = findViewById(R.id.et_password_confirmation)
@@ -50,6 +59,21 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         val user = sessionManager!!.getUserDetail()
         val token = user!![sessionManager!!.TOKEN]
+        accountVM =
+            ViewModelProvider(
+                this,
+                ViewModelProvider.NewInstanceFactory()
+            ).get(AccountViewModel::class.java)
+
+        accountVM!!.setProfile(token)
+        accountVM!!.getProfile().observe(
+            this,
+            Observer<HashMap<String, String>> { stringStringHashMap ->
+                if (stringStringHashMap.size > 0) {
+                    tvName?.text = stringStringHashMap[accountVM!!.name]
+                    tvNip?.text = stringStringHashMap[accountVM!!.nip]
+                }
+            })
 
         btnChangePassword?.setOnClickListener { v ->
             when (v.id) {

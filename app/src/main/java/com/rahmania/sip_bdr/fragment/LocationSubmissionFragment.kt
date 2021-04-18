@@ -17,6 +17,7 @@ import com.rahmania.sip_bdr.activity.LocationDetailActivity
 import com.rahmania.sip_bdr.adapter.LocationSubmissionAdapter
 import com.rahmania.sip_bdr.helper.SharedPreferences
 import com.rahmania.sip_bdr.helper.SharedPreferences.SessionManager
+import com.rahmania.sip_bdr.viewModel.AccountViewModel
 import com.rahmania.sip_bdr.viewModel.LocationSubmissionViewModel
 import org.json.JSONArray
 import org.json.JSONException
@@ -28,6 +29,7 @@ class LocationSubmissionFragment : Fragment() {
     private var rv: RecyclerView? = null
     private var tvNoLocationSubmission: TextView? = null
     private var locationVM: LocationSubmissionViewModel? = null
+    private var accountVM: AccountViewModel? = null
     private var sessionManager: SharedPreferences? = null
 
     override fun onCreateView(
@@ -40,6 +42,8 @@ class LocationSubmissionFragment : Fragment() {
 
     override fun onViewCreated(v: View, savedInstanceState: Bundle?) {
         super.onViewCreated(v, savedInstanceState)
+        val tvName: TextView = v.findViewById(R.id.tv_name) as TextView
+        val tvNim: TextView = v.findViewById(R.id.tv_nip) as TextView
         rv = v.findViewById<View>(R.id.rv_locations) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
         tvNoLocationSubmission = v.findViewById<View>(R.id.tv_no_locationSubmission) as TextView
@@ -58,6 +62,22 @@ class LocationSubmissionFragment : Fragment() {
         sessionManager!!.isLogin()
         val user = sessionManager!!.getUserDetail()
         val token = user!![sessionManager!!.TOKEN]
+        accountVM =
+            ViewModelProvider(
+                requireActivity(),
+                NewInstanceFactory()
+            ).get(AccountViewModel::class.java)
+
+        accountVM!!.setProfile(token)
+        accountVM!!.getProfile().observe(
+            requireActivity(),
+            Observer<HashMap<String, String>> { stringStringHashMap ->
+                if (stringStringHashMap.size > 0) {
+                    tvName.text = stringStringHashMap[accountVM!!.name]
+                    tvNim.text = stringStringHashMap[accountVM!!.nip]
+                }
+            })
+
         locationVM =
             ViewModelProvider(requireActivity(), NewInstanceFactory()).get(
                 LocationSubmissionViewModel::class.java)

@@ -3,6 +3,7 @@ package com.rahmania.sip_bdr.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rahmania.sip_bdr.R
@@ -24,6 +25,22 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.ListViewHolder>() {
         notifyDataSetChanged()
     }
 
+    inner class ListViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+        val tvName: TextView = itemView.findViewById<View>(R.id.tv_name) as TextView
+        val tvNim: TextView = itemView.findViewById<View>(R.id.tv_nim) as TextView
+        val ivStatus: ImageView = itemView.findViewById<View>(R.id.iv_status) as ImageView
+        fun bind(item: JSONObject, listener: OnItemClickListener?) {
+            itemView.setOnClickListener {
+                try {
+                    listener?.onItemClick(item)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ListViewHolder {
         val mView: View = LayoutInflater.from(viewGroup.context).inflate(
             R.layout.students_list,
@@ -40,27 +57,21 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.ListViewHolder>() {
         try {
             holder.tvName.text = studentData.getJSONObject(position).getString("name")
             holder.tvNim.text = studentData.getJSONObject(position).getString("nim")
-            holder.tvStatus.text = ("Status: " + studentData.getJSONObject(position).getString("presence_status"))
+            val status = studentData.getJSONObject(position).getString("presence_status")
+            when (status) {
+                "Hadir" -> {
+                    holder.ivStatus.setImageResource(R.drawable.ic_checked)
+                }
+                "Absen" -> {
+                    holder.ivStatus.setImageResource(R.drawable.ic_delete)
+                }
+                else -> {
+                    holder.ivStatus.setImageResource(R.drawable.ic_info)
+                }
+            }
             holder.bind(studentData.getJSONObject(position), listener)
         } catch (e: JSONException) {
             e.printStackTrace()
-        }
-    }
-
-    inner class ListViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        val tvName: TextView = itemView.findViewById<View>(R.id.tv_name) as TextView
-        val tvNim: TextView = itemView.findViewById<View>(R.id.tv_nim) as TextView
-        val tvStatus: TextView = itemView.findViewById<View>(R.id.tv_presence_status) as TextView
-
-        fun bind(item: JSONObject, listener: OnItemClickListener?) {
-            itemView.setOnClickListener {
-                try {
-                    listener?.onItemClick(item)
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            }
         }
     }
 

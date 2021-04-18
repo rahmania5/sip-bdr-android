@@ -6,24 +6,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.MeetingDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            app:cardCornerRadius="50dp"
+            android:layout_marginStart="-50dp"
+            app:cardBackgroundColor="@color/colorCard">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="50dp"
+                android:padding="5dp">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    tools:ignore="UselessParent">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            style="@style/TextSpec.Field"
+                            android:textStyle="bold"
+                            android:text="@string/classroom" />
+
+                        <TextView
+                            android:id="@+id/tv_classroomName"
+                            style="@style/TextSpec.Value"
+                            tools:text="Struktur Data dan Algoritma B" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            style="@style/TextSpec.Field"
+                            android:textStyle="bold"
+                            android:text="@string/sks" />
+
+                        <TextView
+                            android:id="@+id/tv_sks"
+                            style="@style/TextSpec.Value"
+                            tools:text="3 SKS" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/TextSpec.Field"
+                            android:textStyle="bold"
+                            android:text="@string/schedule" />
+
+                        <TextView
+                            android:id="@+id/tv_schedule"
+                            style="@style/TextSpec.Value"
+                            tools:text="Hari | Jam" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tv_meetingNumber"
             style="@style/TextAbout.Black"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
-            android:textSize="26sp"
+            android:textSize="20sp"
             tools:text="Pertemuan ke-1" />
 
         <TextView
             style="@style/TextAbout.Subtitle"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/meeting_description" />
 
@@ -64,17 +139,30 @@
                     tools:text="08:00 - 10:00" />
             </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextSpec.Field"
+                    android:text="@string/topic" />
+
+                <TextView
+                    android:id="@+id/tv_topic"
+                    style="@style/TextSpec.Value"
+                    tools:text="Tipe Data Kotlin" />
+            </TableRow>
         </TableLayout>
 
         <TextView
             style="@style/TextAbout.Subtitle"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/presence_description" />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.5"
+            android:layout_weight="0.7"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingTop="5dp">
@@ -86,7 +174,6 @@
                 tools:listitem="@layout/students_list"/>
 
         </LinearLayout>
-
     </LinearLayout>
 
     <RelativeLayout
@@ -105,7 +192,7 @@
             android:clickable="true"
             app:borderWidth="0dp"
             app:elevation="16dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@android:color/white"
             app:pressedTranslationZ="12dp"
             android:id="@+id/fab_editMeeting"
             android:focusable="true" />
@@ -122,7 +209,7 @@
             android:clickable="true"
             app:borderWidth="0dp"
             app:elevation="16dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@android:color/white"
             app:pressedTranslationZ="12dp"
             android:id="@+id/fab_deleteMeeting"
             android:focusable="true" />
@@ -139,7 +226,7 @@
             android:clickable="true"
             app:borderWidth="0dp"
             app:elevation="16dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@android:color/white"
             app:pressedTranslationZ="12dp"
             android:id="@+id/fab"
             android:focusable="true"/>

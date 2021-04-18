@@ -23,6 +23,7 @@
         tools:targetApi="n">
         <activity
             android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name" />
         <activity
             android:name=".activity.LoginActivity"
@@ -40,31 +41,35 @@
         <!-- Classroom Detail Activity -->
         <activity
             android:name=".activity.ClassroomDetailActivity"
-            android:label="Detail Kelas" >
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <!-- Meeting Detail Activity -->
         <activity
             android:name=".activity.MeetingDetailActivity"
-            android:label="Detail Pertemuan" >
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <!-- Add Meeting Activity -->
         <activity
             android:name=".activity.AddMeetingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="Tambah Pertemuan" >
         </activity>
         <!-- Edit Meeting Activity -->
         <activity
             android:name=".activity.EditMeetingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="Edit Pertemuan" >
         </activity>
         <!-- Location Submission Detail Activity -->
         <activity
             android:name=".activity.LocationDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="Detail Pengajuan Lokasi" >
         </activity>
         <!-- Change Password Activity -->
         <activity
             android:name=".activity.ChangePasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="Ganti Password" >
         </activity>
 

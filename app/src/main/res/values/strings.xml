@@ -15,6 +15,7 @@
     <string name="menu_3">Akun</string>
     <string name="app_long_name">Sistem Informasi Presensi BDR</string>
     <string name="nip">NIP. %1$s</string>
+    <string name="nip2">NIP</string>
     <string name="content_desc">Logo Unand</string>
     <string name="content_desc_2">Profile pic</string>
     <string name="change_pass">Ganti Password</string>
@@ -46,6 +47,13 @@
     <string name="loading">Loading…</string>
     <string name="btn_decline">Tolak Pengajuan</string>
     <string name="google_maps_key">AIzaSyCtigRen8h--o1nQV9HijxeJPCKhZoKQjo</string>
+    <string name="content_desc_attendance">Status Kehadiran</string>
+    <string name="topic">Materi</string>
+    <string name="schedule">Jadwal</string>
+    <string name="courseCode">Kode Matkul</string>
+    <string name="classroom">Kelas</string>
+    <string name="logout">Logout</string>
+    <string name="name">Nama</string>
     <string-array name="meeting_number">
         <item>1</item> <item>2</item> <item>3</item>
         <item>4</item> <item>5</item> <item>6</item>
