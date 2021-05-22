@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.rahmania.sip_bdr.activity.ChangePasswordActivity
 import com.rahmania.sip_bdr.R
-import com.rahmania.sip_bdr.activity.LoginActivity
 import com.rahmania.sip_bdr.api.ApiClient
 import com.rahmania.sip_bdr.api.ApiInterface
 import com.rahmania.sip_bdr.helper.SharedPreferences
@@ -53,7 +52,7 @@ class AccountFragment : Fragment() {
         sessionManager = SessionManager(context)
         sessionManager!!.isLogin()
         val user = sessionManager!!.getUserDetail()
-        val token = user!![sessionManager!!.TOKEN]
+        val token = user[sessionManager!!.TOKEN]
 
         accountVM =
             ViewModelProvider(
@@ -97,10 +96,7 @@ class AccountFragment : Fragment() {
                 try {
                     sessionManager?.logoutSession()
                     Toast.makeText(requireActivity(), "Berhasil logout!", Toast.LENGTH_SHORT).show()
-                    val intent =
-                        Intent(requireActivity(), LoginActivity::class.java)
-                    startActivity(intent)
-                    activity?.finish()
+                    sessionManager?.isLogin()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 } catch (e: IOException) {
@@ -113,5 +109,4 @@ class AccountFragment : Fragment() {
             }
         })
     }
-
 }

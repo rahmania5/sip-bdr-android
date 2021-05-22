@@ -79,7 +79,7 @@ class AddMeetingActivity : AppCompatActivity() {
 
     private fun setUpContent() {
         val user = sessionManager!!.getUserDetail()
-        val token = user!![sessionManager!!.TOKEN]
+        val token = user[sessionManager!!.TOKEN]
 
         lecturerClassroomId = intent.extras?.getInt("lecturerclassroom")
         val classroomId = intent.extras?.getInt("classroomId")

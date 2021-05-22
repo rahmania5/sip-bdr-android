@@ -21,6 +21,7 @@ object SharedPreferences {
 
     val IS_LOGIN = "isLogin"
     val TOKEN = "access_token"
+    val FCMTOKEN = "fcm_token"
     val NAME = "name"
     val NIP = "nip"
 
@@ -33,29 +34,25 @@ object SharedPreferences {
 
     fun createLoginSession(
         token: String,
+        fcmToken: String,
         name: String?,
         nip: String?
     ) {
-        editor!!.putBoolean(
-            IS_LOGIN, true)
-        editor!!.putString(
-            TOKEN, "Bearer $token")
-        editor!!.putString(
-            NAME, name)
-        editor!!.putString(
-            NIP, nip)
+        editor!!.putBoolean(IS_LOGIN, true)
+        editor!!.putString(TOKEN, "Bearer $token")
+        editor!!.putString(FCMTOKEN, fcmToken)
+        editor!!.putString(NAME, name)
+        editor!!.putString(NIP, nip)
         editor!!.commit()
     }
 
     // Storing session
-    fun getUserDetail(): HashMap<String, String?>? {
+    fun getUserDetail(): HashMap<String, String?> {
         val user: HashMap<String, String?> = HashMap()
-        user[TOKEN] = sharedPreferences!!.getString(
-            TOKEN, null)
-        user[NAME] = sharedPreferences!!.getString(
-            NAME, null)
-        user[NIP] = sharedPreferences!!.getString(
-            NIP, null)
+        user[TOKEN] = sharedPreferences!!.getString(TOKEN, null)
+        user[FCMTOKEN] = sharedPreferences!!.getString(FCMTOKEN, null)
+        user[NAME] = sharedPreferences!!.getString(NAME, null)
+        user[NIP] = sharedPreferences!!.getString(NIP, null)
         return user
     }
 
@@ -83,6 +80,8 @@ object SharedPreferences {
                 ) {
                     if (response.code() != 200) {
                         val intent = Intent(context_, LoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         logoutSession()
                         context_!!.startActivity(intent)
                     }

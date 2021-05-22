@@ -73,7 +73,7 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setUpContent() {
         val user = sessionManager!!.getUserDetail()
-        val token = user!![sessionManager!!.TOKEN]
+        val token = user[sessionManager!!.TOKEN]
 
         try {
             val intent = intent

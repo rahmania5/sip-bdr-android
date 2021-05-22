@@ -65,7 +65,7 @@ class ClassroomDetailActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "DefaultLocale")
     private fun setUpContent() {
         val user = sessionManager!!.getUserDetail()
-        val token = user!![sessionManager!!.TOKEN]
+        val token = user[sessionManager!!.TOKEN]
 
         try {
             val classroomDetail = JSONObject(intent.getStringExtra("lecturerclassrooms"))
@@ -73,8 +73,8 @@ class ClassroomDetailActivity : AppCompatActivity() {
             val classroomId = classroomDetail.getInt("classroom_id")
             val className = (classroomDetail.getString("course_name").capitalizeFirstLetter() + " "
                     + classroomDetail.getString("classroom_code"))
-            val courseCode = classroomDetail.getString("course_code").toUpperCase()
             tvClassName!!.text = className
+            val courseCode = classroomDetail.getString("course_code").toUpperCase()
             tvCourseCode!!.text = courseCode
             val sks = classroomDetail.getString("sks")
             tvSks!!.text = "$sks SKS"

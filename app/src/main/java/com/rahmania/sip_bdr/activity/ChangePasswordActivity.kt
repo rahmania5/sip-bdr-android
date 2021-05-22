@@ -58,7 +58,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         sessionManager!!.isLogin()
 
         val user = sessionManager!!.getUserDetail()
-        val token = user!![sessionManager!!.TOKEN]
+        val token = user[sessionManager!!.TOKEN]
         accountVM =
             ViewModelProvider(
                 this,

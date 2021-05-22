@@ -29,8 +29,6 @@ class ClassroomAdapter : RecyclerView.Adapter<ClassroomAdapter.ListViewHolder>()
         RecyclerView.ViewHolder(itemView) {
         val tvClassroom: TextView = itemView.findViewById<View>(R.id.tv_item_classroom) as TextView
         val tvCourseCode: TextView = itemView.findViewById<View>(R.id.tv_item_code) as TextView
-//        val tvDay: TextView = itemView.findViewById<View>(R.id.tv_item_day) as TextView
-//        val tvTime: TextView = itemView.findViewById<View>(R.id.tv_item_time) as TextView
         fun bind(item: JSONObject, listener: OnItemClickListener?) {
             itemView.setOnClickListener {
                 try {
@@ -57,23 +55,9 @@ class ClassroomAdapter : RecyclerView.Adapter<ClassroomAdapter.ListViewHolder>()
     @SuppressLint("DefaultLocale")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         try {
-//            val startTime = classroomData.getJSONObject(position).getString("start_time")
-//            val finishTime = classroomData.getJSONObject(position).getString("finish_time")
-
-//            val outputTime = SimpleDateFormat("HH:mm", Locale.US)
-//            val inputTime = SimpleDateFormat("HH:mm:ss", Locale.US)
-//            val startTimeFormat = inputTime.parse(startTime)
-//            val finishTimeFormat = inputTime.parse(finishTime)
-//            val startTimeFormat2 = inputTime.parse(startTime2)
-//            val finishTimeFormat2 = inputTime.parse(finishTime2)
-
             holder.tvClassroom.text = (classroomData.getJSONObject(position).getString("course_name").capitalizeFirstLetter() + " "
                     + classroomData.getJSONObject(position).getString("classroom_code"))
             holder.tvCourseCode.text = classroomData.getJSONObject(position).getString("course_code").toUpperCase()
-//            holder.tvTime.text = (outputTime.format(startTimeFormat) + " - "
-//                    + outputTime.format(finishTimeFormat))
-//            holder.tvDay.text = (classroomData.getJSONObject(position).getString("scheduled_day") +
-//                    " | " + outputTime.format(startTimeFormat) + " - " + outputTime.format(finishTimeFormat))
             holder.bind(classroomData.getJSONObject(position), listener)
         } catch (e: JSONException) {
             e.printStackTrace()

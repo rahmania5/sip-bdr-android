@@ -72,20 +72,20 @@
                 </TableLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-    </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="0.8"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingTop="5dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_locations"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.8"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/locations_list" />
+            android:layout_height="0dp"
+            android:paddingTop="5dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_locations"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/locations_list" />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView

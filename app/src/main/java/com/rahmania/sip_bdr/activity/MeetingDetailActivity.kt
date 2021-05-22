@@ -102,7 +102,7 @@ class MeetingDetailActivity : AppCompatActivity() {
 
     private fun setUpContent() {
         val user = sessionManager!!.getUserDetail()
-        val token = user!![sessionManager!!.TOKEN]
+        val token = user[sessionManager!!.TOKEN]
 
         val studentAdapter = StudentAdapter()
         studentAdapter.StudentAdapter(object: StudentAdapter.OnItemClickListener {

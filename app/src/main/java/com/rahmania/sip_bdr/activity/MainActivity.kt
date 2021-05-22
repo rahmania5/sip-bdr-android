@@ -81,54 +81,54 @@ class MainActivity : AppCompatActivity() {
         active = fragment
     }
 
-    private fun logout() {
-        this.apiInterface = getClient()!!.create(ApiInterface::class.java)
-        val user = sessionManager.getUserDetail()
-        val token = user!![sessionManager.TOKEN]
-        if (token != null) {
-            Log.e("logout", token)
-        }
-        val logoutCall: Call<ResponseBody?>? = apiInterface.logout(token)
-        logoutCall?.enqueue(object : Callback<ResponseBody?> {
-            override fun onResponse(
-                call: Call<ResponseBody?>?,
-                response: Response<ResponseBody?>
-            ) {
-                try {
-                    sessionManager.logoutSession()
-                    Toast.makeText(this@MainActivity, "Berhasil logout!", Toast.LENGTH_SHORT).show()
-                    val intent =
-                        Intent(this@MainActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody?>?, t: Throwable) {
-                Log.e("error data", t.message.toString())
-            }
-        })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.logout_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        setMode(item.itemId)
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun setMode(selectedMode: Int) {
-        when (selectedMode) {
-            R.id.item_logout -> {
-                logout()
-            }
-        }
-    }
+//    private fun logout() {
+//        this.apiInterface = getClient()!!.create(ApiInterface::class.java)
+//        val user = sessionManager.getUserDetail()
+//        val token = user!![sessionManager.TOKEN]
+//        if (token != null) {
+//            Log.e("logout", token)
+//        }
+//        val logoutCall: Call<ResponseBody?>? = apiInterface.logout(token)
+//        logoutCall?.enqueue(object : Callback<ResponseBody?> {
+//            override fun onResponse(
+//                call: Call<ResponseBody?>?,
+//                response: Response<ResponseBody?>
+//            ) {
+//                try {
+//                    sessionManager.logoutSession()
+//                    Toast.makeText(this@MainActivity, "Berhasil logout!", Toast.LENGTH_SHORT).show()
+//                    val intent =
+//                        Intent(this@MainActivity, LoginActivity::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                } catch (e: JSONException) {
+//                    e.printStackTrace()
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseBody?>?, t: Throwable) {
+//                Log.e("error data", t.message.toString())
+//            }
+//        })
+//    }
+//
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.logout_menu, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        setMode(item.itemId)
+//        return super.onOptionsItemSelected(item)
+//    }
+//
+//    private fun setMode(selectedMode: Int) {
+//        when (selectedMode) {
+//            R.id.item_logout -> {
+//                logout()
+//            }
+//        }
+//    }
 }

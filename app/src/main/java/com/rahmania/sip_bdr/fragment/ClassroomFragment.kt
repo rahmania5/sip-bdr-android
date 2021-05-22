@@ -43,7 +43,7 @@ class ClassroomFragment : Fragment() {
     override fun onViewCreated(v: View, savedInstanceState: Bundle?) {
         super.onViewCreated(v, savedInstanceState)
         val tvName: TextView = v.findViewById(R.id.tv_name) as TextView
-        val tvNim: TextView = v.findViewById(R.id.tv_nip) as TextView
+        val tvNip: TextView = v.findViewById(R.id.tv_nip) as TextView
         rv = v.findViewById<View>(R.id.rv_classrooms) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
         tvNoClassroom = v.findViewById<View>(R.id.tv_no_classroom) as TextView
@@ -61,7 +61,7 @@ class ClassroomFragment : Fragment() {
         sessionManager = SessionManager(context)
         sessionManager!!.isLogin()
         val user = sessionManager!!.getUserDetail()
-        val token = user!![sessionManager!!.TOKEN]
+        val token = user[sessionManager!!.TOKEN]
         accountVM =
             ViewModelProvider(
                 requireActivity(),
@@ -74,7 +74,7 @@ class ClassroomFragment : Fragment() {
             Observer<HashMap<String, String>> { stringStringHashMap ->
                 if (stringStringHashMap.size > 0) {
                     tvName.text = stringStringHashMap[accountVM!!.name]
-                    tvNim.text = stringStringHashMap[accountVM!!.nip]
+                    tvNip.text = stringStringHashMap[accountVM!!.nip]
                 }
             })
 

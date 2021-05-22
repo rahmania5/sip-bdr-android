@@ -10,7 +10,8 @@ interface ApiInterface {
     @POST("login")
     fun loginResponse(
         @Field("username") username: String?,
-        @Field("password") password: String?
+        @Field("password") password: String?,
+        @Field("device_id") deviceId: String?
     ): Call<ResponseBody?>?
 
     @POST("logout")

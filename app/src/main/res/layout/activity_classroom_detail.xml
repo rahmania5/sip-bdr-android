@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.ClassroomDetailActivity">
 
     <LinearLayout
@@ -93,21 +92,6 @@
                     style="@style/TextSpec.Value"
                     tools:text="Monday | 10:00 - 12:00" />
             </TableRow>
-
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <TextView-->
-<!--                    style="@style/TextSpec.Field"-->
-<!--                    android:text="@string/time" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/tv_time"-->
-<!--                    style="@style/TextSpec.Value"-->
-<!--                    tools:text="Time - Time" />-->
-<!--            </TableRow>-->
-
         </TableLayout>
 
         <TextView

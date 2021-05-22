@@ -1,4 +1,4 @@
-package com.rahmania.sip_bdr_student.helper
+package com.rahmania.sip_bdr.helper
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -11,8 +11,8 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.rahmania.sip_bdr_student.R
-import com.rahmania.sip_bdr_student.activity.MainActivity
+import com.rahmania.sip_bdr.R
+import com.rahmania.sip_bdr.activity.MainActivity
 
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
