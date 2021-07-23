@@ -34,13 +34,13 @@ class AddMeetingActivity : AppCompatActivity() {
     private var startTime: String? = null
     private var finishTime: String? = null
     private var topic: String? = null
+    private var lecturerClassroomId: Int? = null
     private lateinit var apiInterface: ApiInterface
     private var sessionManager: SharedPreferences? = null
     lateinit var progressDialog: CustomProgressDialog
     private var scheduleVM: ClassroomScheduleViewModel? = null
     private var meetingVM: MeetingNumberViewModel? = null
 
-    private var lecturerClassroomId: Int? = null
     private var tvClassName: TextView? = null
     private var tvSks: TextView? = null
     private var tvSchedule: TextView? = null
@@ -119,7 +119,7 @@ class AddMeetingActivity : AppCompatActivity() {
             MeetingNumberViewModel::class.java
         )
         progressDialog.showLoading()
-        meetingVM!!.setMeetingNumber(token, lecturerClassroomId)
+        meetingVM!!.setMeetingNumber(token, classroomId)
         meetingVM!!.getMeetingNumber()?.observe(this,
             Observer<JSONArray?> { data ->
                 var meeting: String
@@ -173,7 +173,7 @@ class AddMeetingActivity : AppCompatActivity() {
         btnCreateMeeting?.setOnClickListener { v ->
             when (v.id) {
                 R.id.btn_create_meeting -> {
-                    createMeeting(token!!, lecturerClassroomId!!, lecturerClassroomId!!)
+                    createMeeting(token!!, lecturerClassroomId!!)
                 }
             }
         }
@@ -254,7 +254,7 @@ class AddMeetingActivity : AppCompatActivity() {
         etDate?.setText(sdf.format(dateCalendar.time))
     }
 
-    private fun createMeeting(token: String, id: Int, lecturerClassroomId: Int) {
+    private fun createMeeting(token: String, lecturerClassroomId: Int) {
         meetingNumber = meetingNumberSpinner?.selectedItem.toString()
         changeDateFormat()
         date = etDate?.text.toString()
@@ -265,7 +265,7 @@ class AddMeetingActivity : AppCompatActivity() {
         progressDialog.showLoading()
         apiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val meetingCall: Call<ResponseBody?>? =
-            apiInterface.createMeeting(token, id,
+            apiInterface.createMeeting(token, lecturerClassroomId,
                 meetingNumber!!, date, startTime, finishTime, lecturerClassroomId, topic)
         meetingCall?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
@@ -298,6 +298,4 @@ class AddMeetingActivity : AppCompatActivity() {
             }
         })
     }
-
-//    private fun JSONArray.toMutableList(): MutableList<String> = MutableList(length(), this::getString)
 }

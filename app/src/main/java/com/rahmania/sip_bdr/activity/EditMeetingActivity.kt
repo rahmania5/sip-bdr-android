@@ -125,7 +125,7 @@ class EditMeetingActivity : AppCompatActivity() {
             MeetingNumberViewModel::class.java
         )
         progressDialog.showLoading()
-        meetingVM!!.setMeetingNumber(token, lecturerClassroomId)
+        meetingVM!!.setMeetingNumber(token, classroomId)
         meetingVM!!.getMeetingNumber()?.observe(this,
             Observer<JSONArray?> { data ->
                 var meeting: String
@@ -172,7 +172,7 @@ class EditMeetingActivity : AppCompatActivity() {
         btnEditMeeting?.setOnClickListener { v ->
             when (v.id) {
                 R.id.btn_edit_meeting -> {
-                    editMeeting(token!!, id!!, id!!)
+                    editMeeting(token!!, id!!, lecturerClassroomId!!)
                 }
             }
         }
@@ -268,7 +268,7 @@ class EditMeetingActivity : AppCompatActivity() {
         etDate?.setText(sdf.format(dateCalendar.time))
     }
 
-    private fun editMeeting(token: String, id: Int, meetingId: Int) {
+    private fun editMeeting(token: String, id: Int, lecturerClassroomId: Int) {
         meetingNumber = meetingNumberSpinner?.selectedItem.toString()
         changeDateFormat()
         date = etDate?.text.toString()
@@ -280,7 +280,7 @@ class EditMeetingActivity : AppCompatActivity() {
         apiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val meetingCall: Call<ResponseBody?>? =
             apiInterface.editMeeting(token, id,
-                meetingId, meetingNumber!!, date, startTime, finishTime, topic)
+                lecturerClassroomId, meetingNumber!!, date, startTime, finishTime, topic)
         meetingCall?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 Toast.makeText(this@EditMeetingActivity, "Pertemuan ke-" +

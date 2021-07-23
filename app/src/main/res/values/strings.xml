@@ -11,7 +11,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="menu_1">Daftar Kelas</string>
-    <string name="menu_2">Pengajuan Lokasi</string>
+    <string name="menu_2">Persetujuan Lokasi</string>
     <string name="menu_3">Akun</string>
     <string name="app_long_name">Sistem Informasi Presensi BDR</string>
     <string name="nip">NIP. %1$s</string>
@@ -54,6 +54,10 @@
     <string name="classroom">Kelas</string>
     <string name="logout">Logout</string>
     <string name="name">Nama</string>
+    <string name="unactivate_location">Nonaktifkan Lokasi</string>
+    <string name="status_late">Terlambat</string>
+    <string name="status_left_too_early">Keluar sebelum selesai</string>
+    <string name="activate_location">Aktifkan Lokasi</string>
     <string-array name="meeting_number">
         <item>1</item> <item>2</item> <item>3</item>
         <item>4</item> <item>5</item> <item>6</item>

@@ -1,16 +1,18 @@
 package com.rahmania.sip_bdr.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.rahmania.sip_bdr.R
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class LocationSubmissionAdapter : RecyclerView.Adapter<LocationSubmissionAdapter.ListViewHolder>() {
+class LocationSubmissionAdapter(val context: Context) : RecyclerView.Adapter<LocationSubmissionAdapter.ListViewHolder>() {
     private var locationData = JSONArray()
     private var listener: OnItemClickListener? = null
 
@@ -27,6 +29,7 @@ class LocationSubmissionAdapter : RecyclerView.Adapter<LocationSubmissionAdapter
         RecyclerView.ViewHolder(itemView) {
         val tvName: TextView = itemView.findViewById<View>(R.id.tv_item_student) as TextView
         val tvNim: TextView = itemView.findViewById<View>(R.id.tv_item_nim) as TextView
+        var tvStatus: TextView = itemView.findViewById<View>(R.id.tv_item_submission_status) as TextView
         fun bind(item: JSONObject, listener: OnItemClickListener?) {
             itemView.setOnClickListener {
                 try {
@@ -54,6 +57,14 @@ class LocationSubmissionAdapter : RecyclerView.Adapter<LocationSubmissionAdapter
         try {
             holder.tvName.text = locationData.getJSONObject(position).getString("name")
             holder.tvNim.text = locationData.getJSONObject(position).getString("nim")
+            holder.tvStatus.text = locationData.getJSONObject(position).getString("submission_status")
+            if (holder.tvStatus.text == "Belum Disetujui") {
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.black))
+            } else if (holder.tvStatus.text == "Disetujui") {
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.colorSubTitle))
+            } else if (holder.tvStatus.text == "Ditolak") {
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
+            }
             holder.bind(locationData.getJSONObject(position), listener)
         } catch (e: JSONException) {
             e.printStackTrace()

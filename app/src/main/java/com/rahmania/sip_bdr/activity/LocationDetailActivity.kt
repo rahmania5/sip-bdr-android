@@ -26,7 +26,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -46,6 +45,8 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     private var tvStatus:TextView? = null
     private var btnAccept: Button? = null
     private var btnDecline: Button? = null
+    private var btnUnactivate: Button? = null
+    private var btnActivate: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,8 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         btnAccept = findViewById(R.id.btn_accept)
         btnDecline = findViewById(R.id.btn_decline)
+        btnUnactivate = findViewById(R.id.btn_unactivate)
+        btnActivate = findViewById(R.id.btn_activate)
 
         sessionManager = SharedPreferences.SessionManager(this)
         sessionManager!!.isLogin()
@@ -91,6 +94,12 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 btnAccept!!.visibility = View.GONE
                 btnDecline!!.visibility = View.GONE
             }
+            if(submissionStatus == "Disetujui") {
+                btnUnactivate!!.visibility = View.VISIBLE
+            }
+            if(submissionStatus == "Nonaktif") {
+                btnActivate!!.visibility = View.VISIBLE
+            }
 
             btnAccept?.setOnClickListener { v ->
                 when (v.id) {
@@ -103,7 +112,7 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
                         builder.setPositiveButton("Ya"
                         ) { dialog, _ ->
-                            acceptSubmission(token!!, id!!)
+                            followUpSubmission(token!!, id!!, "Disetujui")
                         }
 
                         builder.setNegativeButton("Cancel", null)
@@ -125,7 +134,51 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
                         builder.setPositiveButton("Ya"
                         ) { dialog, _ ->
-                            declineSubmission(token!!, id!!)
+                            followUpSubmission(token!!, id!!, "Ditolak")
+                        }
+
+                        builder.setNegativeButton("Cancel", null)
+                        val dialog: AlertDialog? = builder.create()
+                        dialog?.setCanceledOnTouchOutside(false)
+                        dialog?.show()
+                    }
+                }
+            }
+
+            btnUnactivate?.setOnClickListener { v ->
+                when (v.id) {
+                    R.id.btn_unactivate -> {
+                        val builder: AlertDialog.Builder =
+                            AlertDialog.Builder(this@LocationDetailActivity)
+                        builder.setTitle("Nonaktifkan Lokasi")
+                        builder.setIcon(R.drawable.ic_nonactive)
+                        builder.setMessage("Anda yakin ingin menonaktifkan lokasi ini?")
+
+                        builder.setPositiveButton("Ya"
+                        ) { dialog, _ ->
+                            followUpSubmission(token!!, id!!, "Nonaktif")
+                        }
+
+                        builder.setNegativeButton("Cancel", null)
+                        val dialog: AlertDialog? = builder.create()
+                        dialog?.setCanceledOnTouchOutside(false)
+                        dialog?.show()
+                    }
+                }
+            }
+
+            btnActivate?.setOnClickListener { v ->
+                when (v.id) {
+                    R.id.btn_activate -> {
+                        val builder: AlertDialog.Builder =
+                            AlertDialog.Builder(this@LocationDetailActivity)
+                        builder.setTitle("Aktifkan Lokasi")
+                        builder.setIcon(R.drawable.ic_checked)
+                        builder.setMessage("Anda yakin ingin menyetujui lokasi ini?")
+
+                        builder.setPositiveButton("Ya"
+                        ) { dialog, _ ->
+                            followUpSubmission(token!!, id!!, "Disetujui")
                         }
 
                         builder.setNegativeButton("Cancel", null)
@@ -157,56 +210,58 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun acceptSubmission(token: String, id: Int) {
+    private fun followUpSubmission(token: String, id: Int, status: String) {
         progressDialog.showLoading()
         apiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val acceptLocationCall: Call<ResponseBody?>? = apiInterface.followUpSubmission(token, id,
-            "Disetujui"
+        val locationResponse: Call<ResponseBody?>? = apiInterface.followUpSubmission(
+            token,
+            id,
+            status
         )
-        acceptLocationCall?.enqueue(object : Callback<ResponseBody?> {
+        locationResponse?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-                try {
+                val jsonRESULTS: JSONObject?
+                if (response.code() == 200) {
+                    jsonRESULTS = JSONObject(response.body()!!.string())
+                    val location = jsonRESULTS.getJSONObject("location")
+                    if (location.length() != 0) {
+                        val submissionStatus = location.getString("submission_status")
+                        when (submissionStatus) {
+                            "Disetujui" -> {
+                                Toast.makeText(
+                                    this@LocationDetailActivity,
+                                    "Berhasil menyetujui pengajuan lokasi!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            "Ditolak" -> {
+                                Toast.makeText(
+                                    this@LocationDetailActivity,
+                                    "Berhasil menolak pengajuan lokasi!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            "Nonaktif" -> {
+                                Toast.makeText(
+                                    this@LocationDetailActivity,
+                                    "Berhasil menonaktifkan lokasi!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                        val intent =
+                            Intent(this@LocationDetailActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    jsonRESULTS = JSONObject(response.errorBody()?.string())
+                    val error = jsonRESULTS.getString("error")
                     Toast.makeText(
                         this@LocationDetailActivity,
-                        "Berhasil menyetujui pengajuan lokasi!",
-                        Toast.LENGTH_SHORT
+                        error.toString(),
+                        Toast.LENGTH_LONG
                     ).show()
-                    val intent =
-                        Intent(this@LocationDetailActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                progressDialog.hideLoading()
-            }
-
-            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                Log.e("error data", t.message.toString())
-            }
-        })
-    }
-
-    private fun declineSubmission(token: String, id: Int) {
-        progressDialog.showLoading()
-        apiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val acceptLocationCall: Call<ResponseBody?>? = apiInterface.followUpSubmission(token, id,
-            "Ditolak"
-        )
-        acceptLocationCall?.enqueue(object : Callback<ResponseBody?> {
-            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-                try {
-                    Toast.makeText(
-                        this@LocationDetailActivity,
-                        "Berhasil menolak pengajuan lokasi!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val intent =
-                        Intent(this@LocationDetailActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } catch (e: IOException) {
-                    e.printStackTrace()
                 }
                 progressDialog.hideLoading()
             }

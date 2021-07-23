@@ -41,10 +41,17 @@ interface ApiInterface {
         @Path("classroom_id") classroomId: Int?
     ): Call<ResponseBody?>?
 
-    @GET("meetingnumber/{lecturer_classroom_id}")
+    @GET("lecturermeetings/{classroom_id}")
+    fun getMeetings(
+        @Header("Authorization") authToken: String?,
+        @Path("classroom_id") classroomId: Int?
+    ): Call<ResponseBody?>?
+
+
+    @GET("meetingnumber/{classroom_id}")
     fun getMeetingNumbers(
         @Header("Authorization") authToken: String?,
-        @Path("lecturer_classroom_id") lecturerClassroomId: Int?
+        @Path("classroom_id") classroomId: Int?
     ): Call<ResponseBody?>?
 
     @FormUrlEncoded
@@ -65,7 +72,7 @@ interface ApiInterface {
     fun editMeeting(
         @Header("Authorization") authToken: String?,
         @Path("id") id: Int?,
-        @Field("id") meetingId: Int?,
+        @Field("lecturer_classroom_id") lecturerClassroomId: Int?,
         @Field("number_of_meeting") numberOfMeeting: String,
         @Field("date") date: String?,
         @Field("start_time") startTime: String?,
@@ -77,12 +84,6 @@ interface ApiInterface {
     fun deleteMeeting(
         @Header("Authorization") authToken: String?,
         @Path("id") id: Int?
-    ): Call<ResponseBody?>?
-
-    @GET("lecturermeetings/{id}")
-    fun getMeetings(
-        @Header("Authorization") authToken: String?,
-        @Path("id") classroomId: Int?
     ): Call<ResponseBody?>?
 
     @GET("studentsubmission")
@@ -109,5 +110,4 @@ interface ApiInterface {
         @Path("id") id: Int?,
         @Field("presence_status") presenceStatus: String?
     ): Call<ResponseBody?>?
-
 }

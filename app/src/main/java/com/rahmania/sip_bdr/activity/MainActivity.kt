@@ -1,29 +1,19 @@
 package com.rahmania.sip_bdr.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rahmania.sip_bdr.R
-import com.rahmania.sip_bdr.api.ApiClient.getClient
 import com.rahmania.sip_bdr.api.ApiInterface
-import com.rahmania.sip_bdr.helper.SharedPreferences.SessionManager
 import com.rahmania.sip_bdr.fragment.AccountFragment
 import com.rahmania.sip_bdr.fragment.ClassroomFragment
 import com.rahmania.sip_bdr.fragment.LocationSubmissionFragment
-import okhttp3.ResponseBody
-import org.json.JSONException
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
 import com.rahmania.sip_bdr.helper.SharedPreferences
+import com.rahmania.sip_bdr.helper.SharedPreferences.SessionManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,8 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menu: Menu
     private lateinit var menuItem: MenuItem
     private lateinit var bottomNavigationView: BottomNavigationView
-
-    private lateinit var apiInterface: ApiInterface
     private lateinit var sessionManager: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,55 +68,4 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().hide(active).show(fragment).commit()
         active = fragment
     }
-
-//    private fun logout() {
-//        this.apiInterface = getClient()!!.create(ApiInterface::class.java)
-//        val user = sessionManager.getUserDetail()
-//        val token = user!![sessionManager.TOKEN]
-//        if (token != null) {
-//            Log.e("logout", token)
-//        }
-//        val logoutCall: Call<ResponseBody?>? = apiInterface.logout(token)
-//        logoutCall?.enqueue(object : Callback<ResponseBody?> {
-//            override fun onResponse(
-//                call: Call<ResponseBody?>?,
-//                response: Response<ResponseBody?>
-//            ) {
-//                try {
-//                    sessionManager.logoutSession()
-//                    Toast.makeText(this@MainActivity, "Berhasil logout!", Toast.LENGTH_SHORT).show()
-//                    val intent =
-//                        Intent(this@MainActivity, LoginActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                } catch (e: JSONException) {
-//                    e.printStackTrace()
-//                } catch (e: IOException) {
-//                    e.printStackTrace()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseBody?>?, t: Throwable) {
-//                Log.e("error data", t.message.toString())
-//            }
-//        })
-//    }
-//
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.logout_menu, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        setMode(item.itemId)
-//        return super.onOptionsItemSelected(item)
-//    }
-//
-//    private fun setMode(selectedMode: Int) {
-//        when (selectedMode) {
-//            R.id.item_logout -> {
-//                logout()
-//            }
-//        }
-//    }
 }

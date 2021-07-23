@@ -20,9 +20,9 @@ class MeetingNumberViewModel : ViewModel() {
     private lateinit var apiInterface: ApiInterface
     private val meetingNumber = MutableLiveData<JSONArray>()
 
-    fun setMeetingNumber(token: String?, lecturerClassroomId: Int?) {
+    fun setMeetingNumber(token: String?, classroomId: Int?) {
         this.apiInterface = getClient()!!.create(ApiInterface::class.java)
-        apiInterface.getMeetingNumbers(token, lecturerClassroomId)?.enqueue(object : Callback<ResponseBody?> {
+        apiInterface.getMeetingNumbers(token, classroomId)?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(
                 call: Call<ResponseBody?>?,
                 response: Response<ResponseBody?>

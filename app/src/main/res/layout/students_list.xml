@@ -45,7 +45,15 @@
                 style="@style/TextSpec.Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 tools:text="NIM" />
+
+            <TextView
+                android:id="@+id/tv_info"
+                style="@style/TextSpec.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Keterangan" />
 
         </LinearLayout>
     </LinearLayout>

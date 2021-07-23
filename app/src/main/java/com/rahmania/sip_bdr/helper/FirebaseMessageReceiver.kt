@@ -22,15 +22,6 @@ class FirebaseMessageReceiver: FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "From: ${remoteMessage.from}")
 
-//        // Check if message contains a data payload.
-//        if (remoteMessage.data.isNotEmpty()) {
-//            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
-//        }
-//        // Check if message contains a notification payload.
-//        remoteMessage.notification?.let {
-//            Log.d(TAG, "Message Notification Body: ${it.body}")
-//        }
-
         if(remoteMessage.notification != null){
             showNotification(remoteMessage)
         }
@@ -39,8 +30,9 @@ class FirebaseMessageReceiver: FirebaseMessagingService() {
     private fun showNotification(remote: RemoteMessage) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val pendingIntent = PendingIntent.getActivity(
-            this, 1 /* Request code */, intent,
+            this, 1, intent,
             PendingIntent.FLAG_ONE_SHOT
         )
 
@@ -50,11 +42,10 @@ class FirebaseMessageReceiver: FirebaseMessagingService() {
 
         val title = remote.notification?.title
         val message = remote.notification?.body
-//        val dataId = remote.data["id"].toString()
 
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_round)
+            .setSmallIcon(R.drawable.ic_launcher)
             .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(true)
@@ -68,7 +59,7 @@ class FirebaseMessageReceiver: FirebaseMessagingService() {
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_HIGH
             )
             mBuilder.setChannelId(CHANNEL_ID)
             mNotificationManager.createNotificationChannel(channel)

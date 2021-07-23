@@ -47,8 +47,8 @@ class LocationSubmissionFragment : Fragment() {
         rv = v.findViewById<View>(R.id.rv_locations) as RecyclerView
         rv!!.layoutManager = LinearLayoutManager(activity)
         tvNoLocationSubmission = v.findViewById<View>(R.id.tv_no_locationSubmission) as TextView
-        val locationAdapter = LocationSubmissionAdapter()
-        locationAdapter.LocationSubmissionAdapter(object: LocationSubmissionAdapter.OnItemClickListener {
+        val locationAdapter = activity?.let { LocationSubmissionAdapter(it) }
+        locationAdapter?.LocationSubmissionAdapter(object: LocationSubmissionAdapter.OnItemClickListener {
             @Throws(JSONException::class)
             override fun onItemClick(item: JSONObject) {
                 val intent = Intent(activity, LocationDetailActivity::class.java)
@@ -56,7 +56,7 @@ class LocationSubmissionFragment : Fragment() {
                 startActivity(intent)
             }
         })
-        locationAdapter.notifyDataSetChanged()
+        locationAdapter?.notifyDataSetChanged()
         rv!!.adapter = locationAdapter
         sessionManager = SessionManager(context)
         sessionManager!!.isLogin()
@@ -86,7 +86,7 @@ class LocationSubmissionFragment : Fragment() {
             Observer<JSONArray?> { data ->
                 tvNoLocationSubmission!!.visibility = View.VISIBLE
                 if (data != null && data.length() > 0) {
-                    locationAdapter.setData(data)
+                    locationAdapter?.setData(data)
                     tvNoLocationSubmission!!.visibility = View.GONE
                 }
             })

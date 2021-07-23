@@ -27,14 +27,20 @@
         <TextView
             android:id="@+id/tv_item_student"
             style="@style/TextList"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="6dp"
             android:textStyle="bold"
             tools:text="Nama Mahasiswa" />
 
         <TextView
             android:id="@+id/tv_item_nim"
             style="@style/TextList"
+            android:layout_marginBottom="6dp"
             tools:text="NIM" />
 
+        <TextView
+            android:id="@+id/tv_item_submission_status"
+            style="@style/TextList"
+            android:textSize="12sp"
+            tools:text="Status" />
     </LinearLayout>
 </RelativeLayout>

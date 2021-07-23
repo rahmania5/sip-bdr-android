@@ -103,6 +103,21 @@
     </TableLayout>
 
     <Button
+        android:id="@+id/btn_unactivate"
+        style="@style/Button"
+        android:backgroundTint="@color/red"
+        android:layout_marginBottom="8dp"
+        android:text="@string/unactivate_location"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_activate"
+        style="@style/Button"
+        android:layout_marginBottom="8dp"
+        android:text="@string/activate_location"
+        android:visibility="gone"/>
+
+    <Button
         android:id="@+id/btn_accept"
         style="@style/Button"
         android:layout_marginBottom="8dp"

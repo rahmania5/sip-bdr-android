@@ -38,7 +38,6 @@ class ClassroomDetailActivity : AppCompatActivity() {
     private var tvCourseCode:TextView? = null
     private var tvSks:TextView? = null
     private var tvSchedule:TextView? = null
-    //private var tvLecturer:TextView? = null
     private var fabCreateMeeting: FloatingActionButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +51,6 @@ class ClassroomDetailActivity : AppCompatActivity() {
         tvCourseCode = findViewById(R.id.tv_code)
         tvSks = findViewById(R.id.tv_sks)
         tvSchedule = findViewById(R.id.tv_schedule)
-        //tvLecturer = findViewById(R.id.tv_lecturer)
 
         fabCreateMeeting = findViewById(R.id.fab_createMeeting)
 
@@ -108,18 +106,6 @@ class ClassroomDetailActivity : AppCompatActivity() {
                     }
                 })
 
-//            var lecturerName = ""
-//            for (i in 0 until classroomDetail.getJSONArray("lecturers").length()) {
-//                lecturerName = if (i == 0) {
-//                    lecturerName + classroomDetail.getJSONArray("lecturers").getJSONObject(i)
-//                        .getString("name")
-//                } else {
-//                    "$lecturerName, " + classroomDetail.getJSONArray("lecturers").getJSONObject(i)
-//                        .getString("name")
-//                }
-//            }
-//            tvLecturer!!.text = lecturerName
-
             val meetingAdapter = MeetingAdapter()
             meetingAdapter.MeetingAdapter(object: MeetingAdapter.OnItemClickListener {
                 @Throws(JSONException::class)
@@ -145,7 +131,7 @@ class ClassroomDetailActivity : AppCompatActivity() {
                 ClassroomDetailViewModel::class.java
             )
             progressDialog.showLoading()
-            meetingVM!!.setMeetings(token, id)
+            meetingVM!!.setMeetings(token, classroomId)
             meetingVM!!.getMeetings()?.observe(this,
                 Observer<JSONArray?> { data ->
                     if (data != null) {
