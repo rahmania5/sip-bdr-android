@@ -183,7 +183,6 @@ class LocationDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
                         builder.setNegativeButton("Cancel", null)
                         val dialog: AlertDialog? = builder.create()
-                        dialog?.setCanceledOnTouchOutside(false)
                         dialog?.show()
                     }
                 }
